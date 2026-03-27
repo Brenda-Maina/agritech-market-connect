@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meet the Farmers — AgriTech Market Connect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green-deep: #1a3a1f;
+      --green-mid: #2d6a35;
+      --green-bright: #4caf50;
+      --green-light: #a8d5ab;
+      --green-pale: #e8f5e9;
+      --cream: #faf7f2;
+      --accent: #f4a534;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--green-deep); }
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 5%;
+      background: rgba(26,58,31,0.97);
+      border-bottom: 1px solid rgba(76,175,80,0.2);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      color: #a8d5ab; font-size: 1.2rem; font-weight: 700; text-decoration: none;
+    }
+    .nav-logo span { color: #f4a534; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: #a8d5ab; }
+    .page-hero {
+      background: var(--green-deep);
+      padding: 8rem 5% 4.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 70% 50%, rgba(76,175,80,0.1) 0%, transparent 65%);
+    }
+    .page-hero h1 {
+      font-family: 'Playfair Display', serif;
+      color: #fff; font-size: clamp(2rem, 4vw, 3.2rem); margin-bottom: 0.8rem; position: relative;
+    }
+    .page-hero h1 em { font-style: normal; color: var(--green-light); }
+    .page-hero p { color: rgba(255,255,255,0.5); font-size: 1rem; max-width: 520px; margin: 0 auto; position: relative; }
+    .section { padding: 5rem 5%; max-width: 1200px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--green-mid); margin-bottom: 0.6rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .section-label::before { content:''; width:24px; height:2px; background:var(--green-bright); border-radius:2px; }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.7rem, 3vw, 2.5rem);
+      color: var(--green-deep); margin-bottom: 0.8rem;
+    }
+    .section-sub { color: #4a6b4d; font-size: 1rem; line-height: 1.75; max-width: 580px; margin-bottom: 3rem; }
+    .farmers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .farmer-card {
+      background: #fff;
+      border: 1px solid rgba(76,175,80,0.15);
+      border-radius: 18px; padding: 2rem;
+      transition: transform 0.25s, box-shadow 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .farmer-card:hover { transform: translateY(-5px); box-shadow: 0 18px 36px rgba(26,58,31,0.1); }
+    .farmer-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, #4caf50, #a8d5ab);
+    }
+    .farmer-avatar {
+      width: 64px; height: 64px; background: var(--green-pale);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; margin-bottom: 1rem;
+    }
+    .farmer-card h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--green-deep); margin-bottom: 0.25rem; }
+    .farmer-card .location { font-size: 0.8rem; color: var(--green-mid); margin-bottom: 0.8rem; }
+    .farmer-card .bio { font-size: 0.88rem; color: #4a6b4d; line-height: 1.65; margin-bottom: 1rem; }
+    .crop-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .crop-tag {
+      background: var(--green-pale); color: var(--green-mid);
+      font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.65rem;
+      border-radius: 100px;
+    }
+    .champion-badge {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      background: rgba(244,165,52,0.12); border: 1px solid rgba(244,165,52,0.35);
+      color: #c47d00; font-size: 0.75rem; font-weight: 700;
+      padding: 0.25rem 0.65rem; border-radius: 100px; margin-top: 0.8rem;
+    }
+    .champions-section { background: var(--green-deep); padding: 5rem 5%; }
+    .champions-inner { max-width: 1200px; margin: 0 auto; }
+    .champions-section .section-title { color: #fff; }
+    .champions-section .section-label { color: var(--green-light); }
+    .champions-section .section-sub { color: rgba(255,255,255,0.5); }
+    .champions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.2rem;
+    }
+    .champion-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(76,175,80,0.2);
+      border-radius: 16px; padding: 1.8rem;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .champion-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-4px); }
+    .champion-card .champ-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+    .champion-card h3 { font-family: 'Playfair Display', serif; color: #fff; font-size: 1.05rem; margin-bottom: 0.3rem; }
+    .champion-card .zone { font-size: 0.78rem; color: var(--green-light); margin-bottom: 0.6rem; }
+    .champion-card p { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
+    .impact-section { padding: 5rem 5%; background: #fff; }
+    .impact-inner { max-width: 1200px; margin: 0 auto; }
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem; margin-top: 2.5rem;
+    }
+    .impact-box {
+      background: var(--green-pale); border-radius: 16px; padding: 2rem; text-align: center;
+    }
+    .impact-box .num {
+      font-family: 'Playfair Display', serif; font-size: 2.8rem;
+      font-weight: 900; color: var(--green-mid); line-height: 1;
+    }
+    .impact-box .num span { color: var(--accent); }
+    .impact-box p { font-size: 0.85rem; color: #4a6b4d; margin-top: 0.4rem; text-transform: uppercase; letter-spacing: 0.07em; font-weight: 600; }
+    footer {
+      background: #0d1f10; padding: 2rem 5%;
+      border-top: 1px solid rgba(76,175,80,0.15);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo { font-family: 'Playfair Display', serif; color: #a8d5ab; font-size: 1rem; font-weight: 700; }
+    .footer-logo span { color: #f4a534; }
+    footer p { color: rgba(255,255,255,0.3); font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">AgriTech <span>Market Connect</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="farmers.html">Farmers</a></li>
+      <li><a href="order.html">Order</a></li>
+      <li><a href="login.html">Login</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero">
+    <h1>Meet the <em>Farmers</em></h1>
+    <p>The smallholder farmers at the heart of AgriTech Market Connect — growing food, building futures, and embracing technology.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Our Community</div>
+    <h2 class="section-title">Farmers in the Pilot Region</h2>
+    <p class="section-sub">These farmers participated in Phase 1 workshops and are now listing their produce on the platform for the first time.</p>
+    <div class="farmers-grid">
+      <div class="farmer-card">
+        <div class="farmer-avatar">👨‍🌾</div>
+        <h3>James Mwangi</h3>
+        <p class="location">📍 Pilot Village A</p>
+        <p class="bio">Has been farming for 18 years. Attended all 5 workshops and was among the first to list his tomatoes on the app. Now mentors neighbours on drip irrigation.</p>
+        <div class="crop-tags">
+          <span class="crop-tag">🍅 Tomatoes</span>
+          <span class="crop-tag">🧅 Onions</span>
+        </div>
+        <div class="champion-badge">⭐ Digital Champion</div>
+      </div>
+      <div class="farmer-card">
+        <div class="farmer-avatar">👩‍🌾</div>
+        <h3>Grace Otieno</h3>
+        <p class="location">📍 Pilot Village B</p>
+        <p class="bio">A second-generation farmer growing leafy vegetables. She struggled with the app at first but with support from Digital Champions, she now lists inventory weekly.</p>
+        <div class="crop-tags">
+          <span class="crop-tag">🥬 Spinach</span>
+          <span class="crop-tag">🌿 Kale</span>
+        </div>
+      </div>
+      <div class="farmer-card">
+        <div class="farmer-avatar">👨‍🌾</div>
+        <h3>Peter Kamau</h3>
+        <p class="location">📍 Pilot Village A</p>
+        <p class="bio">Specialises in root vegetables. After the soil health workshop, Peter applied new composting methods and saw a noticeable improvement in his carrot yield this season.</p>
+        <div class="crop-tags">
+          <span class="crop-tag">🥕 Carrots</span>
+          <span class="crop-tag">🥔 Potatoes</span>
+        </div>
+        <div class="champion-badge">⭐ Digital Champion</div>
+      </div>
+      <div class="farmer-card">
+        <div class="farmer-avatar">👩‍🌾</div>
+        <h3>Mary Wanjiku</h3>
+        <p class="location">📍 Pilot Village C</p>
+        <p class="bio">One of the most active users on the platform. Mary lists produce 3–4 times per week and has been a vocal advocate for the hybrid cash-payment model among older farmers.</p>
+        <div class="crop-tags">
+          <span class="crop-tag">🌿 Kale</span>
+          <span class="crop-tag">🥬 Spinach</span>
+          <span class="crop-tag">🫘 Green Beans</span>
+        </div>
+      </div>
+      <div class="farmer-card">
+        <div class="farmer-avatar">👨‍🌾</div>
+        <h3>David Njoroge</h3>
+        <p class="location">📍 Pilot Village B</p>
+        <p class="bio">David was initially sceptical about digital pricing but joined the first hybrid pilot transaction. After receiving fair cash payment, he became one of the programme's strongest supporters.</p>
+        <div class="crop-tags">
+          <span class="crop-tag">🥔 Potatoes</span>
+          <span class="crop-tag">🧅 Onions</span>
+        </div>
+      </div>
+      <div class="farmer-card">
+        <div class="farmer-avatar">👩‍🌾</div>
+        <h3>Ruth Wambui</h3>
+        <p class="location">📍 Pilot Village C</p>
+        <p class="bio">Grows avocados and seasonal fruit. Ruth uses her Digital Champion role to run weekly clinics from her homestead, teaching neighbours how to photograph and list their produce on the app.</p>
+        <div class="crop-tags">
+          <span class="crop-tag">🥑 Avocados</span>
+        </div>
+        <div class="champion-badge">⭐ Digital Champion</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="champions-section">
+    <div class="champions-inner">
+      <div class="section-label">Digital Champions</div>
+      <h2 class="section-title">Our 8 Community Tech Leaders</h2>
+      <p class="section-sub" style="color:rgba(255,255,255,0.5);">These farmers were identified as tech-savvy community members and trained to provide first-line support and run weekly neighbourhood clinics.</p>
+      <div class="champions-grid">
+        <div class="champion-card">
+          <div class="champ-icon">📱</div>
+          <h3>James Mwangi</h3>
+          <p class="zone">Village A — North Zone</p>
+          <p>Runs Tuesday morning clinics. Focuses on inventory listing and pricing features.</p>
+        </div>
+        <div class="champion-card">
+          <div class="champ-icon">🌐</div>
+          <h3>Peter Kamau</h3>
+          <p class="zone">Village A — South Zone</p>
+          <p>Handles connectivity sync support. Acts as a local sync point for offline farmers nearby.</p>
+        </div>
+        <div class="champion-card">
+          <div class="champ-icon">📚</div>
+          <h3>Ruth Wambui</h3>
+          <p class="zone">Village C — Central Zone</p>
+          <p>Runs homestead clinics on Thursdays. Helped design the picture-based user guide.</p>
+        </div>
+        <div class="champion-card">
+          <div class="champ-icon">🤝</div>
+          <h3>Anne Mutua</h3>
+          <p class="zone">Village B — East Zone</p>
+          <p>Focuses on helping farmers over 50 with one-on-one app navigation support.</p>
+        </div>
+        <div class="champion-card">
+          <div class="champ-icon">💡</div>
+          <h3>John Ochieng</h3>
+          <p class="zone">Village B — West Zone</p>
+          <p>Leads sessions on understanding dynamic pricing and building trust in digital transactions.</p>
+        </div>
+        <div class="champion-card">
+          <div class="champ-icon">🛰️</div>
+          <h3>Sarah Njeri</h3>
+          <p class="zone">Village C — North Zone</p>
+          <p>Pilots the store-and-forward feature. Works with the telecom team on signal booster options.</p>
+        </div>
+        <div class="champion-card">
+          <div class="champ-icon">📊</div>
+          <h3>Moses Kimani</h3>
+          <p class="zone">Village A — East Zone</p>
+          <p>Tracks platform adoption numbers and helps the core team understand on-the-ground barriers.</p>
+        </div>
+        <div class="champion-card">
+          <div class="champ-icon">🌱</div>
+          <h3>Elizabeth Achieng</h3>
+          <p class="zone">Village C — South Zone</p>
+          <p>Translated training materials into the local dialect and leads the picture-based guide workshops.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="impact-section">
+    <div class="impact-inner">
+      <div class="section-label">Community Impact</div>
+      <h2 class="section-title">The Numbers So Far</h2>
+      <div class="impact-grid">
+        <div class="impact-box">
+          <div class="num">75<span>+</span></div>
+          <p>Farmers Reached</p>
+        </div>
+        <div class="impact-box">
+          <div class="num">120</div>
+          <p>Registered on App</p>
+        </div>
+        <div class="impact-box">
+          <div class="num">45</div>
+          <p>Active This Week</p>
+        </div>
+        <div class="impact-box">
+          <div class="num">8</div>
+          <p>Digital Champions</p>
+        </div>
+        <div class="impact-box">
+          <div class="num">40<span>%</span></div>
+          <p>Knowledge Increase</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">AgriTech <span>Market Connect</span></div>
+    <p>Project Lead: Brenda Maina | Pilot Phase</p>
+    <p>© 2025 AgriTech Market Connect</p>
+  </footer>
+
+</body>
+</html>

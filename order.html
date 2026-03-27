@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Produce — AgriTech Market Connect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green-deep: #1a3a1f;
+      --green-mid: #2d6a35;
+      --green-bright: #4caf50;
+      --green-light: #a8d5ab;
+      --green-pale: #e8f5e9;
+      --cream: #faf7f2;
+      --accent: #f4a534;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--green-deep); }
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 5%;
+      background: rgba(26,58,31,0.97);
+      border-bottom: 1px solid rgba(76,175,80,0.2);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      color: #a8d5ab; font-size: 1.2rem; font-weight: 700; text-decoration: none;
+    }
+    .nav-logo span { color: #f4a534; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: #a8d5ab; }
+    .page-hero {
+      background: var(--green-deep);
+      padding: 8rem 5% 4rem;
+      text-align: center;
+    }
+    .page-hero h1 {
+      font-family: 'Playfair Display', serif;
+      color: #fff; font-size: clamp(2rem, 4vw, 3.2rem); margin-bottom: 0.8rem;
+    }
+    .page-hero h1 em { font-style: normal; color: var(--green-light); }
+    .page-hero p { color: rgba(255,255,255,0.55); font-size: 1rem; max-width: 500px; margin: 0 auto; }
+    .page-body { max-width: 1200px; margin: 0 auto; padding: 3.5rem 5%; display: grid; grid-template-columns: 1fr 340px; gap: 2.5rem; align-items: start; }
+    @media (max-width: 860px) { .page-body { grid-template-columns: 1fr; } }
+    .section-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--green-mid); margin-bottom: 0.6rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .section-label::before { content:''; width:24px; height:2px; background:var(--green-bright); border-radius:2px; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--green-deep); margin-bottom: 1.5rem; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.2rem; }
+    .product-card {
+      background: #fff; border: 1px solid rgba(76,175,80,0.15);
+      border-radius: 14px; padding: 1.4rem; text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(26,58,31,0.09); }
+    .product-emoji { font-size: 2.5rem; margin-bottom: 0.7rem; }
+    .product-card h3 { font-size: 1rem; font-weight: 700; color: var(--green-deep); margin-bottom: 0.3rem; }
+    .product-card .farmer { font-size: 0.78rem; color: var(--green-mid); margin-bottom: 0.5rem; }
+    .product-card .price { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--green-bright); font-weight: 700; margin-bottom: 0.8rem; }
+    .product-card .price span { font-size: 0.75rem; color: #999; font-family: 'DM Sans', sans-serif; font-weight: 400; }
+    .qty-row { display: flex; align-items: center; justify-content: center; gap: 0.6rem; margin-bottom: 0.8rem; }
+    .qty-btn {
+      width: 28px; height: 28px; background: var(--green-pale);
+      border: 1px solid rgba(76,175,80,0.25); border-radius: 6px;
+      font-size: 1.1rem; font-weight: 700; color: var(--green-mid);
+      cursor: pointer; transition: background 0.2s; line-height: 1;
+    }
+    .qty-btn:hover { background: var(--green-light); }
+    .qty-num { font-weight: 700; color: var(--green-deep); min-width: 24px; text-align: center; }
+    .add-btn {
+      width: 100%; background: var(--green-bright); color: #fff;
+      border: none; border-radius: 8px; padding: 0.6rem;
+      font-size: 0.88rem; font-weight: 700; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; transition: background 0.2s;
+    }
+    .add-btn:hover { background: var(--green-mid); }
+    .cart-box {
+      background: var(--green-deep); border-radius: 18px; padding: 2rem;
+      position: sticky; top: 6rem; color: #fff;
+    }
+    .cart-box h2 {
+      font-family: 'Playfair Display', serif;
+      color: #fff; font-size: 1.3rem; margin-bottom: 1.5rem;
+      padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .cart-count {
+      background: var(--accent); color: var(--green-deep);
+      font-size: 0.78rem; font-weight: 800; padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+    }
+    .cart-items { min-height: 120px; }
+    .cart-empty { color: rgba(255,255,255,0.35); font-size: 0.9rem; text-align: center; padding: 2rem 0; }
+    .cart-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.7rem 0; border-bottom: 1px solid rgba(255,255,255,0.07);
+      font-size: 0.88rem;
+    }
+    .cart-item .ci-name { color: var(--green-light); font-weight: 600; }
+    .cart-item .ci-detail { color: rgba(255,255,255,0.45); font-size: 0.78rem; }
+    .cart-item .ci-price { color: var(--accent); font-weight: 700; }
+    .cart-item .ci-remove { color: rgba(255,255,255,0.2); cursor: pointer; font-size: 0.8rem; margin-left: 0.6rem; }
+    .cart-item .ci-remove:hover { color: #ff6b6b; }
+    .cart-total {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 1.2rem; padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+    .cart-total span:first-child { color: rgba(255,255,255,0.5); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .cart-total span:last-child { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #fff; }
+    .checkout-btn {
+      width: 100%; background: var(--accent); color: var(--green-deep);
+      border: none; border-radius: 10px; padding: 0.95rem;
+      font-size: 1rem; font-weight: 800; font-family: 'DM Sans', sans-serif;
+      cursor: pointer; margin-top: 1.2rem; transition: transform 0.2s, background 0.2s;
+    }
+    .checkout-btn:hover { transform: translateY(-2px); background: #ffc04d; }
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6); z-index: 200;
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal {
+      background: #fff; border-radius: 20px; padding: 2.5rem;
+      max-width: 400px; width: 90%; text-align: center;
+    }
+    .modal-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .modal h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--green-deep); margin-bottom: 0.5rem; }
+    .modal p { color: #4a6b4d; font-size: 0.95rem; line-height: 1.65; margin-bottom: 1.5rem; }
+    .modal button {
+      background: var(--green-bright); color: #fff; border: none;
+      border-radius: 10px; padding: 0.8rem 2rem; font-size: 0.95rem;
+      font-weight: 700; font-family: 'DM Sans', sans-serif; cursor: pointer;
+    }
+    footer {
+      background: #0d1f10; padding: 2rem 5%;
+      border-top: 1px solid rgba(76,175,80,0.15);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo { font-family: 'Playfair Display', serif; color: #a8d5ab; font-size: 1rem; font-weight: 700; }
+    .footer-logo span { color: #f4a534; }
+    footer p { color: rgba(255,255,255,0.3); font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">AgriTech <span>Market Connect</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="farmers.html">Farmers</a></li>
+      <li><a href="order.html">Order</a></li>
+      <li><a href="login.html">Login</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero">
+    <h1>Order Fresh <em>Produce</em></h1>
+    <p>Buy directly from local farmers in the pilot community. Fair prices. Guaranteed quality.</p>
+  </div>
+
+  <div class="page-body">
+    <div class="products-side">
+      <div class="section-label">Available Today</div>
+      <h2 class="section-title">Fresh From the Farm</h2>
+      <div class="product-grid" id="productGrid"></div>
+    </div>
+    <div class="cart-box">
+      <h2>Your Order <span class="cart-count" id="cartCount">0</span></h2>
+      <div class="cart-items" id="cartItems">
+        <p class="cart-empty">No items yet. Add produce from the left!</p>
+      </div>
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cartTotal">KSh 0</span>
+      </div>
+      <button class="checkout-btn" onclick="checkout()">Place Order →</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal">
+    <div class="modal">
+      <div class="modal-icon">🎉</div>
+      <h3>Order Placed!</h3>
+      <p>Your order has been sent to the farmers. Payment will be collected in cash upon delivery as part of the pilot programme.</p>
+      <button onclick="closeModal()">Back to Shop</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">AgriTech <span>Market Connect</span></div>
+    <p>Project Lead: Brenda Maina | Pilot Phase</p>
+    <p>© 2025 AgriTech Market Connect</p>
+  </footer>
+
+  <script>
+    const products = [
+      { id:1, name:'Tomatoes', farmer:'James Mwangi', price:80, unit:'per kg', emoji:'🍅' },
+      { id:2, name:'Spinach', farmer:'Grace Otieno', price:50, unit:'per bunch', emoji:'🥬' },
+      { id:3, name:'Carrots', farmer:'Peter Kamau', price:60, unit:'per kg', emoji:'🥕' },
+      { id:4, name:'Kale (Sukuma)', farmer:'Mary Wanjiku', price:40, unit:'per bunch', emoji:'🌿' },
+      { id:5, name:'Potatoes', farmer:'David Njoroge', price:90, unit:'per kg', emoji:'🥔' },
+      { id:6, name:'Green Beans', farmer:'Anne Mutua', price:70, unit:'per kg', emoji:'🫘' },
+      { id:7, name:'Onions', farmer:'John Ochieng', price:65, unit:'per kg', emoji:'🧅' },
+      { id:8, name:'Avocados', farmer:'Ruth Wambui', price:120, unit:'per 3 pcs', emoji:'🥑' },
+    ];
+
+    let qty = {};
+    let cart = {};
+
+    function renderProducts() {
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = products.map(p => {
+        const q = qty[p.id] || 1;
+        return `<div class="product-card">
+          <div class="product-emoji">${p.emoji}</div>
+          <h3>${p.name}</h3>
+          <p class="farmer">by ${p.farmer}</p>
+          <p class="price">KSh ${p.price} <span>${p.unit}</span></p>
+          <div class="qty-row">
+            <button class="qty-btn" onclick="changeQty(${p.id}, -1)">−</button>
+            <span class="qty-num" id="qty-${p.id}">${q}</span>
+            <button class="qty-btn" onclick="changeQty(${p.id}, 1)">+</button>
+          </div>
+          <button class="add-btn" onclick="addToCart(${p.id})">Add to Order</button>
+        </div>`;
+      }).join('');
+    }
+
+    function changeQty(id, delta) {
+      qty[id] = Math.max(1, (qty[id] || 1) + delta);
+      document.getElementById('qty-' + id).textContent = qty[id];
+    }
+
+    function addToCart(id) {
+      const p = products.find(x => x.id === id);
+      const q = qty[id] || 1;
+      if (cart[id]) {
+        cart[id].qty += q;
+      } else {
+        cart[id] = { ...p, qty: q };
+      }
+      renderCart();
+    }
+
+    function removeFromCart(id) {
+      delete cart[id];
+      renderCart();
+    }
+
+    function renderCart() {
+      const items = Object.values(cart);
+      const container = document.getElementById('cartItems');
+      const countEl = document.getElementById('cartCount');
+      const totalEl = document.getElementById('cartTotal');
+      if (items.length === 0) {
+        container.innerHTML = '<p class="cart-empty">No items yet. Add produce from the left!</p>';
+        countEl.textContent = '0';
+        totalEl.textContent = 'KSh 0';
+        return;
+      }
+      let total = 0;
+      container.innerHTML = items.map(item => {
+        total += item.price * item.qty;
+        return `<div class="cart-item">
+          <div>
+            <div class="ci-name">${item.emoji} ${item.name}</div>
+            <div class="ci-detail">${item.qty} × KSh ${item.price}</div>
+          </div>
+          <div style="display:flex;align-items:center">
+            <span class="ci-price">KSh ${item.price * item.qty}</span>
+            <span class="ci-remove" onclick="removeFromCart(${item.id})">✕</span>
+          </div>
+        </div>`;
+      }).join('');
+      countEl.textContent = items.reduce((s, i) => s + i.qty, 0);
+      totalEl.textContent = 'KSh ' + total;
+    }
+
+    function checkout() {
+      if (Object.keys(cart).length === 0) { alert('Please add items to your order first.'); return; }
+      document.getElementById('modal').classList.add('show');
+      cart = {};
+      renderCart();
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('show');
+    }
+
+    renderProducts();
+  </script>
+</body>
+</html>

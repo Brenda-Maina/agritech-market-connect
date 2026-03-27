@@ -47,9 +47,10 @@
       color: #a8d5ab;
       font-size: 1.35rem;
       font-weight: 700;
+      text-decoration: none;
     }
     .nav-logo span { color: #f4a534; }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links { display: flex; gap: 1.8rem; list-style: none; }
     .nav-links a {
       color: rgba(255,255,255,0.75);
       text-decoration: none;
@@ -58,6 +59,14 @@
       transition: color 0.25s;
     }
     .nav-links a:hover { color: #a8d5ab; }
+    .nav-links a.nav-cta {
+      background: var(--green-bright);
+      color: var(--green-deep);
+      padding: 0.45rem 1.1rem;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+    .nav-links a.nav-cta:hover { background: var(--green-light); }
 
     .hero {
       min-height: 100vh;
@@ -426,13 +435,15 @@
 <body>
 
   <nav>
-    <div class="nav-logo">AgriTech <span>Market Connect</span></div>
+    <a href="index.html" class="nav-logo">AgriTech <span>Market Connect</span></a>
     <ul class="nav-links">
       <li><a href="#achievements">Achievements</a></li>
       <li><a href="#metrics">Metrics</a></li>
       <li><a href="#challenges">Challenges</a></li>
       <li><a href="#partners">Partners</a></li>
-      <li><a href="#ahead">Looking Ahead</a></li>
+      <li><a href="farmers.html">Meet the Farmers</a></li>
+      <li><a href="order.html">Order</a></li>
+      <li><a href="login.html" class="nav-cta">Login</a></li>
     </ul>
   </nav>
 
@@ -447,7 +458,7 @@
       <p>AgriTech Market Connect bridges the gap between smallholder farmers and local buyers using technology, training, and trust — building sustainable economic futures one harvest at a time.</p>
       <div class="hero-cta">
         <a href="#achievements" class="btn btn-primary">Explore Progress ↓</a>
-        <a href="#ahead" class="btn btn-outline">Looking Ahead</a>
+        <a href="order.html" class="btn btn-outline">Order Produce</a>
       </div>
       <div class="hero-stats">
         <div class="hero-stat">
@@ -700,3 +711,19 @@
 
 </body>
 </html>
+```
+
+---
+
+**What to do:**
+
+1. In Codespace, click your **index.html** file in the left sidebar
+2. Press **Ctrl+A** to select everything inside it
+3. Delete it
+4. Paste the code above
+5. Press **Ctrl+S** to save
+6. Open the terminal and run:
+```
+git add .
+git commit -m "update nav with all pages"
+git push
