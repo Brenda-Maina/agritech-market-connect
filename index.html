@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AgriTech — Login / Register</title>
+  <title>AgriTech — Market Connect</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     * {
@@ -68,10 +68,19 @@
       margin-bottom: 0.5rem;
       text-align: center;
     }
-    .sub {
+    .homepage, .about {
+      padding: 2rem 5%;
       text-align: center;
-      color: #6b8c6e;
-      margin-bottom: 2rem;
+      margin-top: 20px;
+    }
+    .homepage h2, .about h2 {
+      font-family: 'Playfair Display', serif;
+      color: #1a3a1f;
+      margin-bottom: 1rem;
+    }
+    .homepage p, .about p {
+      margin: 0.5rem 0;
+      color: #3a3a3a;
     }
     .tabs {
       display: flex;
@@ -94,43 +103,6 @@
       color: #2d6a35;
       border-bottom: 2px solid #2d6a35;
       margin-bottom: -2px;
-    }
-    .form-group {
-      margin-bottom: 1.25rem;
-    }
-    label {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: #1a2e1c;
-    }
-    input {
-      width: 100%;
-      padding: 0.8rem 1rem;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      font-size: 1rem;
-      transition: border 0.2s;
-    }
-    input:focus {
-      outline: none;
-      border-color: #4caf50;
-    }
-    button[type="submit"] {
-      width: 100%;
-      background: #2d6a35;
-      color: white;
-      border: none;
-      padding: 0.9rem;
-      border-radius: 12px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    button[type="submit"]:hover {
-      background: #4caf50;
     }
     .demo-note {
       margin-top: 1.5rem;
@@ -159,16 +131,42 @@
 <nav>
   <a href="index.html" class="nav-logo">AgriTech <span>Market Connect</span></a>
   <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
+    <li><a href="#" onclick="showSection('homepage')">Home</a></li>
+    <li><a href="#" onclick="showSection('about')">About Project</a></li>
     <li><a href="farmers.html">Meet Farmers</a></li>
     <li><a href="order.html">Order</a></li>
     <li><a href="login.html">Login</a></li>
   </ul>
 </nav>
 
-<div class="container">
+<!-- Homepage Section -->
+<div class="homepage" id="homepage">
+  <h2>Welcome to AgriTech Market Connect</h2>
+  <p>This platform connects farmers directly with markets, enhancing their access to customers while improving efficiency.</p>
+  <p>Join us in our mission to transform agriculture with modern technology.</p>
+</div>
+
+<!-- About Section -->
+<div class="about" id="about" style="display: none;">
+  <h2>About the AgriTech Project</h2>
+  <p>Status: The AgriTech Market Connect project is in an active iteration phase, focusing on user feedback and adaptation.</p>
+  <p>Key Achievements:</p>
+  <ul>
+    <li>Conducted workshops for over 75 farmers on modern farming techniques.</li>
+    <li>Established partnerships with local grocery chains for produce purchasing.</li>
+    <li>Created a network of "Digital Champions" to assist local farmers.</li>
+  </ul>
+  <p>Challenges and Mitigation:</p>
+  <ul>
+    <li>Digital Literacy Barrier: Introduced Digital Champions for support.</li>
+    <li>Connectivity Issues: Piloted features for offline synchronization.</li>
+    <li>Building Trust in Digital Transactions: Implemented a hybrid transaction model.</li>
+  </ul>
+</div>
+
+<div class="container" style="display: none;">
   <div class="card">
-    <h1>Welcome Back</h1>
+    <h1>Login / Register</h1>
     <div class="sub">Log in or create an account</div>
 
     <div class="tabs">
@@ -221,6 +219,21 @@
 </footer>
 
 <script>
+  // Function to show sections
+  function showSection(section) {
+    document.getElementById('homepage').style.display = 'none';
+    document.getElementById('about').style.display = 'none';
+    document.querySelector('.container').style.display = 'none';
+
+    if (section === 'homepage') {
+      document.getElementById('homepage').style.display = 'block';
+    } else if (section === 'about') {
+      document.getElementById('about').style.display = 'block';
+    } else {
+      document.querySelector('.container').style.display = 'block';
+    }
+  }
+
   // Switch between login and register tabs
   const loginTab = document.getElementById('loginTabBtn');
   const registerTab = document.getElementById('registerTabBtn');
@@ -272,7 +285,6 @@
 
     users.push({ name, email, password });
     saveUsers(users);
-    // Also store current session
     localStorage.setItem('currentUser', email);
     localStorage.setItem('userName', name);
     alert('Account created successfully! You are now logged in.');
